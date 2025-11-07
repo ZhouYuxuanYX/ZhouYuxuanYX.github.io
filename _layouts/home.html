@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+  <p class="post-description" style="max-width: 600px; margin: 1em auto; color: #555; font-size: 1.1em;">
+      {{ site.description }}
+  </p>
+  {{ content }}
+
+  {%- if site.posts.size > 0 -%}
+    
+  {%- endif -%}
+
+</div>

@@ -1,0 +1,26 @@
+<ul class="social-media-list" style="list-style: none; padding: 0; margin: 0.6em 0 0;">
+  {%- if site.google_scholar_url -%}
+    <li style="margin-bottom: 0.5em;">
+      <a href="{{ site.google_scholar_url }}" target="_blank"
+         style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 6px;">
+        <svg class="svg-icon" style="width: 20px; height: 20px; vertical-align: middle;">
+          <use xlink:href="{{ '/assets/minima-social-icons.svg#google-scholar' | relative_url }}"></use>
+        </svg>
+        <span class="username" style="font-size: 0.95em;">Google Scholar</span>
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if site.github_username -%}
+    <li style="margin-bottom: 0.5em;">
+      <a href="https://github.com/{{ site.github_username | cgi_escape | escape }}" target="_blank"
+         style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 6px;">
+        <svg class="svg-icon" style="width: 20px; height: 20px; vertical-align: middle;">
+          <use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use>
+        </svg>
+        <span class="username" style="font-size: 0.95em;">{{ site.github_username | escape }}</span>
+      </a>
+    </li>
+  {%- endif -%}
+</ul>
+
