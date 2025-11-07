@@ -5,6 +5,9 @@
 <symbol id="google-scholar" viewBox="0 0 512 512">
   <path d="M256 32L0 192l96 32v96l160 64 160-64v-96l96-32L256 32zM256 96l138.7 80L256 256 117.3 176 256 96zm-96 176l96 38.4L352 272v64l-96 38.4L160 336v-64z"/>
 </symbol>
+<symbol id="google-scholar" viewBox="0 0 24 24">
+  <path d="M12 0L9.5 6h5L12 0zM12 8c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2z"/>
+</symbol>
 
 <symbol id="facebook" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M15.117 0H.883C.395 0 0 .395 0 .883v14.234c0 .488.395.883.883.883h7.663V9.804H6.46V7.39h2.086V5.607c0-2.066 1.262-3.19 3.106-3.19.883 0 1.642.064 1.863.094v2.16h-1.28c-1 0-1.195.48-1.195 1.18v1.54h2.39l-.31 2.42h-2.08V16h4.077c.488 0 .883-.395.883-.883V.883C16 .395 15.605 0 15.117 0" fill-rule="nonzero"/></symbol>
 
