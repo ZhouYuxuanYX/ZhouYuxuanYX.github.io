@@ -29,7 +29,7 @@ email: zhouyuxuanyx@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Hi, I’m Yuxuan. It’s a pity that the AI community hasn’t fully benefited from my valuable yet underappreciated ideas. 
   This blog aims to present them more clearly and intuitively.
-baseurl: "/blog" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://ZhouYuxuanYX.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  ZhouYuxuanYX
 
