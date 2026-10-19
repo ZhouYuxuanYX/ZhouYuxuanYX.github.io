@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yuxuan Zhou</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#666; --line:#e6e6e6;
+    --accent:#b6073f;         /* the marker red from the CV */
+    --accent2:#88ac0b;        /* the swish green from the CV */
+    --link:#0b61c9;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;
+    line-height:1.6; background:#fff;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:56px 28px 80px}
+  a{color:var(--link); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap}
+  .photo{width:132px; height:132px; border-radius:8px; object-fit:cover; flex:none; background:#f0f0f0}
+  .head-main{flex:1; min-width:260px}
+  h1{font-family:"Helvetica Neue",Arial,sans-serif; font-size:30px; margin:0 0 4px}
+  .role{font-size:16px; color:var(--muted); margin:0 0 12px}
+  .contact{font-size:14.5px; color:var(--muted)}
+  .contact span{white-space:nowrap; margin-right:14px}
+  h2{
+    font-family:"Helvetica Neue",Arial,sans-serif; font-size:16px; letter-spacing:.04em;
+    text-transform:uppercase; margin:38px 0 14px; padding-bottom:6px;
+    border-bottom:2px solid var(--accent2);
+  }
+  p{margin:0 0 12px}
+  .bio{font-size:16px}
+  .item{margin:0 0 16px}
+  .item .top{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+  .item .title{font-weight:bold}
+  .item .when{color:var(--muted); font-size:14px; white-space:nowrap}
+  .item .desc{font-size:15px; color:#333; margin-top:2px}
+  .tag{color:var(--accent); font-weight:bold}
+  ul.pubs{list-style:none; padding:0; margin:0}
+  ul.pubs li{position:relative; padding-left:20px; margin:0 0 12px; font-size:15px}
+  ul.pubs li:before{content:"▸"; color:var(--accent); position:absolute; left:0}
+  .venue{color:var(--muted)}
+  .au{color:var(--accent); font-size:13px}
+  .langs{font-size:14px; color:var(--muted); margin:14px 0 0}
+  ul.news{list-style:none; padding:0; margin:0}
+  ul.news li{display:flex; gap:14px; margin:0 0 9px; font-size:15px}
+  ul.news .date{color:var(--accent); font-weight:bold; flex:none; width:68px; font-size:13.5px; padding-top:1px}
+  .foot{margin-top:46px; font-size:13px; color:#999; text-align:center}
+  nav.top{margin:0 0 30px; padding-bottom:12px; border-bottom:1px solid var(--line);
+          font-family:"Helvetica Neue",Arial,sans-serif; font-size:15px}
+  nav.top a{color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-right:26px}
+  nav.top .active{color:var(--accent); font-weight:bold; text-transform:uppercase; letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top">
+    <a href="https://zhouyuxuanyx.github.io/">Blog</a>
+    <span class="active">CV</span>
+  </nav>
+
+  <header>
+    <img class="photo" src="photo.jpg" alt="Yuxuan Zhou">
+    <div class="head-main">
+      <h1>Yuxuan Zhou</h1>
+      <p class="role">LLM Pretraining &middot; Multi-Token Prediction and Looped Architectures</p>
+      <div class="contact">
+        <span>&#9993; <a href="mailto:zhouyuxuanyx@gmail.com">zhouyuxuanyx@gmail.com</a></span>
+        <span>&#9733; <a href="https://github.com/ZhouYuxuanYX">GitHub</a></span>
+        <span>&#128218; <a href="https://scholar.google.com/citations?user=ooVdh_kAAAAJ&hl=en">Google Scholar</a></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <h2>About</h2>
+  <p class="bio">
+    I currently work on the pretraining of large language models. My work spans Multi-Token
+    Prediction and Looped Architectures, as well as probabilistic modeling, e.g., scoring
+    functions beyond softmax and speculative decoding, with first-authored papers at
+    ICML, NeurIPS (Oral), CVPR, ACL and ICLR (Oral).
+  </p>
+  <p class="bio">
+    I was trained as an automotive engineer. I took part in the pre-development of the
+    steering control system for the Audi A8 (2018 Edition), on the modeling and simulation
+    of driving dynamics.
+  </p>
+  <p class="langs">Languages: Mandarin Chinese (native) &middot; English (fluent) &middot; German (C1)</p>
+
+  <!-- NEWS -->
+  <h2>News</h2>
+  <ul class="news">
+    <li><span class="date">2026</span><span><strong>ECHO</strong> released.</span></li>
+    <li><span class="date">2026</span><span><strong>HSD</strong> accepted to ICLR 2026 as an <strong>Oral</strong>.</span></li>
+    <li><span class="date">2025</span><span><strong>MaxSup</strong> accepted to NeurIPS 2025 as an <strong>Oral</strong>.</span></li>
+    <li><span class="date">2025</span><span>&ldquo;Balancing Diversity and Risk in LLM Sampling&rdquo; accepted to ACL 2025.</span></li>
+    <li><span class="date">2024</span><span><strong>MultiMax</strong> accepted to ICML 2024.</span></li>
+    <li><span class="date">2024</span><span><strong>BlockGCN</strong> accepted to CVPR 2024.</span></li>
+  </ul>
+
+  <!-- RESEARCH -->
+  <h2>Validated at Scale</h2>
+
+  <div class="item">
+    <div class="top"><span class="title"><span class="tag">ECHO</span> &mdash; Multi-Token Prediction by self-recursion <span class="venue">(<a href="https://github.com/ernie-research/ECHO">code</a>)</span></span></div>
+    <div class="desc">
+      A multi-token prediction paradigm in which the backbone's own final layer predicts
+      every horizon. In pretraining it gains on reasoning and code while holding on the
+      other task classes, and widens its lead across all classes after supervised
+      finetuning; the same shared layer also lets the pretrained model draft for itself.
+      Validated on a production model at scale.
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="top"><span class="title"><span class="tag">MultiMax</span> &mdash; sparse yet diverse output distributions <span class="venue">(ICML 2024)</span></span></div>
+    <div class="desc">
+      A learnable alternative to SoftMax that suppresses the long tail of implausible tokens
+      while preserving the diversity of plausible ones. Validated on a production model at
+      scale, at negligible cost: merely around 1% training slowdown, no extra memory, and a
+      pretraining-loss gain above 0.01.
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <h2>Experience</h2>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">ERNIE Team, Baidu &mdash; Research Engineer</span>
+      <span class="when">Apr 2026 &ndash; Present</span>
+    </div>
+    <div class="desc">Multi-Token Prediction and looped architectures.</div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">Dexmal &mdash; Research Intern</span>
+      <span class="when">Oct 2025 &ndash; Jan 2026</span>
+    </div>
+    <div class="desc">Self-evolving diffusion policy for long-horizon robot manipulation (SeedPolicy).</div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">Qwen Team, Alibaba &mdash; Research Intern</span>
+      <span class="when">Jan 2025 &ndash; Apr 2025</span>
+    </div>
+    <div class="desc">Lossless verification for speculative decoding (HSD, ICLR 2026 Oral).</div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">Language Technologies Institute, CMU &mdash; Visiting Researcher</span>
+      <span class="when">Jun 2023 &ndash; Oct 2023</span>
+    </div>
+    <div class="desc">Topology-aware graph networks for action recognition (BlockGCN, CVPR 2024).</div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">Tongyi Lab, Alibaba &mdash; Research Intern</span>
+      <span class="when">Jul 2022 &ndash; Jul 2023</span>
+    </div>
+    <div class="desc">Spatial priors for vision transformers (SP-ViT, BMVC 2022).</div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">Bosch Center for Artificial Intelligence &mdash; Research Intern</span>
+      <span class="when">Jan 2019 &ndash; May 2019</span>
+    </div>
+    <div class="desc">Unsupervised anomaly detection for deep generative models, applied to optical inspection on assembly lines (NeurIPS 2020).</div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <span class="title">Chassis Electronics, Audi AG &mdash; Research Intern</span>
+      <span class="when">Apr 2017 &ndash; Oct 2017</span>
+    </div>
+    <div class="desc">Dynamics modeling and simulation of the steering control system for the Audi A8
+      (2018 Edition), including a non-Newtonian fitting model of the tire's nonlinear
+      force&ndash;slip characteristics.</div>
+  </div>
+
+  <!-- EDUCATION -->
+  <h2>Education</h2>
+  <div class="item">
+    <div class="top">
+      <span class="title">Ph.D. in Computer Science &mdash; University of Mannheim</span>
+      <span class="when">2020 &ndash; 2025</span>
+    </div>
+    <div class="desc">Advised by
+      <a href="https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/people/margret-keuper">Margret Keuper</a> and
+      <a href="https://cispa.de/en/people/mario.fritz">Mario Fritz</a>.
+      Research focus: Transformers, Multi-Token Prediction and Speculative Decoding.</div>
+  </div>
+  <div class="item">
+    <div class="top">
+      <span class="title">M.Sc. in Automotive Engineering &mdash; University of Stuttgart</span>
+      <span class="when">2015 &ndash; 2018</span>
+    </div>
+    <div class="desc">Research focus: physical modeling of driving dynamics.</div>
+  </div>
+  <div class="item">
+    <div class="top">
+      <span class="title">B.Sc. in Automotive Engineering &mdash; Tongji University</span>
+      <span class="when">2010 &ndash; 2015</span>
+    </div>
+    <div class="desc">Foundations of automotive engineering, including internal combustion
+      engines; a mandatory extra year of German language study.</div>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <h2>Selected Publications</h2>
+  <ul class="pubs">
+    <li>Lossless Hierarchical Speculative Decoding.
+        <span class="venue">ICLR 2026 (Oral)</span> &middot;
+        <a href="https://arxiv.org/abs/2601.05724">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/Hierarchical-Speculative-Decoding">code</a> &middot; <span class="au">first author</span></li>
+    <li>MultiMax: Sparse and Multi-Modal Attention Learning.
+        <span class="venue">ICML 2024</span> &middot;
+        <a href="https://arxiv.org/abs/2406.01189">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/MultiMax">code</a> &middot; <span class="au">first author</span></li>
+    <li>MaxSup: Overcoming Representation Collapse in Label Smoothing.
+        <span class="venue">NeurIPS 2025 (Oral)</span> &middot;
+        <a href="https://arxiv.org/abs/2502.15798">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/Maximum-Suppression-Regularization">code</a> &middot; <span class="au">first author</span></li>
+    <li>Balancing Diversity and Risk in LLM Sampling.
+        <span class="venue">ACL 2025</span> &middot;
+        <a href="https://arxiv.org/abs/2408.13586">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/Benchmarking-and-Guiding-Adaptive-Sampling-Decoding-for-LLMs">code</a> &middot; <span class="au">first author</span></li>
+    <li>BlockGCN: Redefine Topology Awareness for Skeleton-Based Action Recognition.
+        <span class="venue">CVPR 2024</span> &middot;
+        <a href="https://openaccess.thecvf.com/content/CVPR2024/html/Zhou_BlockGCN_Redefine_Topology_Awareness_for_Skeleton-Based_Action_Recognition_CVPR_2024_paper.html">paper</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/BlockGCN">code</a> &middot; <span class="au">first author</span></li>
+    <li>SP-ViT: Learning 2D Spatial Priors for Vision Transformers.
+        <span class="venue">BMVC 2022</span> &middot;
+        <a href="https://arxiv.org/abs/2206.07662">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/SP-ViT-Learning-2D-Spatial-Priors-for-Vision-Transformers">code</a> &middot; <span class="au">first author</span></li>
+    <li>SeedPolicy: Horizon Scaling via Self-Evolving Diffusion Policy for Robot Manipulation.
+        <span class="venue">arXiv 2026</span> &middot;
+        <a href="https://arxiv.org/abs/2603.05117">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/SeedPolicy">code</a> &middot; <span class="au">co-first author</span></li>
+    <li>Understanding Anomaly Detection with Deep Invertible Networks through Hierarchies of Distributions and Features.
+        <span class="venue">NeurIPS 2020</span> &middot;
+        <a href="https://arxiv.org/abs/2006.10848">arXiv</a> &middot;
+        <a href="https://github.com/ZhouYuxuanYX/hierarchical_anomaly_detection">code</a> &middot; <span class="au">second author</span></li>
+  </ul>
+
+  <div class="foot">Built with a single static <code>index.html</code>. Last updated Oct 2026.</div>
+
+</div>
+</body>
+</html>
