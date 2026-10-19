@@ -45,6 +45,13 @@ minima:
     - { platform: google-scholar, user_url: "https://scholar.google.com/citations?user=ooVdh_kAAAAJ&hl=en" }
 
 google_scholar_url: "https://scholar.google.com/citations?user=ooVdh_kAAAAJ&hl=en"
+
+# Keep the Search Console verification file out of the sitemap
+defaults:
+  - scope:
+      path: "google8d4206a58fbe10b6.html"
+    values:
+      sitemap: false
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
