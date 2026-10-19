@@ -1,12 +1,12 @@
 <footer class="site-footer">
-  <div class="wrapper" style="display: flex; justify-content: center; align-items: center; gap: 1.5em; padding: 2em 0; color: #888; flex-wrap: wrap;">
-
-    <!-- Copyright -->
-    <p style="margin: 0; font-size: 0.95em;">© {{ site.author }}, {{ site.time | date: "%Y" }}</p>
-
-    <!-- Social icons stacked vertically -->
-        {%- include social.html -%}
-
+  <div class="wrapper" style="text-align: center; padding: 2.4em 0; color: #999; font-size: 0.9em;">
+    &copy; {{ site.author }} {{ site.time | date: "%Y" }}
+    &nbsp;&middot;&nbsp;
+    <a href="{{ site.google_scholar_url }}" style="color:#999; text-decoration:none;">Google&nbsp;Scholar</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/{{ site.github_username | escape }}" style="color:#999; text-decoration:none;">GitHub</a>
+    &nbsp;&middot;&nbsp;
+    <a href="mailto:{{ site.email }}" style="color:#999; text-decoration:none;">Email</a>
   </div>
 </footer>
 
