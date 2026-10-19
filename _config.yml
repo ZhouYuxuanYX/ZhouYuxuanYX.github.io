@@ -37,6 +37,7 @@ github_username:  ZhouYuxuanYX
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 minima:  
   social_links:
