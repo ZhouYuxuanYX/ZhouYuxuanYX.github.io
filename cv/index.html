@@ -266,12 +266,11 @@
 <script>
 (function () {
   var date = new Date().toISOString().slice(0, 10);
-  // fire-and-forget: increment today + total; the get below reads the fresh values
-  fetch('https://abacus.jasoncameron.dev/hit/zhouyuxuanyx-homepage/' + date).catch(function () {});
-  fetch('https://abacus.jasoncameron.dev/hit/zhouyuxuanyx-homepage/main').catch(function () {});
+  // each hit increments its counter and returns the new value, so there is no
+  // separate read that could race ahead of the increment
   Promise.all([
-    fetch('https://abacus.jasoncameron.dev/get/zhouyuxuanyx-homepage/' + date),
-    fetch('https://abacus.jasoncameron.dev/get/zhouyuxuanyx-homepage/main')
+    fetch('https://abacus.jasoncameron.dev/hit/zhouyuxuanyx-homepage/' + date),
+    fetch('https://abacus.jasoncameron.dev/hit/zhouyuxuanyx-homepage/main')
   ]).then(function (r) { return Promise.all(r.map(function (x) { return x.json(); })); })
     .then(function (v) {
       document.getElementById('views-day').textContent = v[0].value;
