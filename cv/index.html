@@ -52,6 +52,7 @@
   .news-preview{margin:2px 0 14px 82px; max-width:230px}
   .news-preview img{width:100%; height:auto; border:1px solid var(--line); border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,.12)}
   .foot{margin-top:46px; font-size:13px; color:#999; text-align:center}
+  .views{margin-top:40px; font-size:13px; color:#999; text-align:center}
   nav.top{margin:0 0 30px; padding-bottom:12px; border-bottom:1px solid var(--line);
           font-family:"Helvetica Neue",Arial,sans-serif; font-size:15px}
   nav.top a{color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-right:26px}
@@ -266,7 +267,29 @@
         <a href="https://github.com/ZhouYuxuanYX/hierarchical_anomaly_detection">code</a> &middot; <span class="au">second author</span></li>
   </ul>
 
+  <div class="views" id="views">Views: <span id="views-day">&ndash;</span> today &middot; <span id="views-total">&ndash;</span> total</div>
+
   <div class="foot">Built with a single static <code>index.html</code>. Last updated Oct 2026.</div>
+
+<script>
+(function () {
+  var date = new Date().toISOString().slice(0, 10);
+  // fire-and-forget: increment today + total; the get below reads the fresh values
+  fetch('https://abacus.jasoncameron.dev/hit/zhouyuxuanyx-homepage/' + date).catch(function () {});
+  fetch('https://abacus.jasoncameron.dev/hit/zhouyuxuanyx-homepage/main').catch(function () {});
+  Promise.all([
+    fetch('https://abacus.jasoncameron.dev/get/zhouyuxuanyx-homepage/' + date),
+    fetch('https://abacus.jasoncameron.dev/get/zhouyuxuanyx-homepage/main')
+  ]).then(function (r) { return Promise.all(r.map(function (x) { return x.json(); })); })
+    .then(function (v) {
+      document.getElementById('views-day').textContent = v[0].value;
+      document.getElementById('views-total').textContent = v[1].value;
+    })
+    .catch(function () {
+      var el = document.getElementById('views'); if (el) el.style.display = 'none';
+    });
+})();
+</script>
 
 </div>
 </body>
