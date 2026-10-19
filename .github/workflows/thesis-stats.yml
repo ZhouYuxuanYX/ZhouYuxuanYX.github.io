@@ -1,0 +1,67 @@
+name: Thesis stats
+
+# Daily fetch of the dissertation's total downloads and views from MADOC
+# (University of Mannheim repository), shown as badges on /cv/.
+# Results go to the orphan branch thesis-stats, so main (the Pages source) is
+# never rebuilt by this job. If MADOC can't be reached the job fails without
+# touching the branch, and the badges keep the last good values.
+on:
+  schedule:
+    - cron: "37 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch download and view totals
+        run: |
+          mkdir out
+          python3 - <<'EOF'
+          import json, re, sys, urllib.request
+          base = ("https://madoc.bib.uni-mannheim.de/cgi/stats/get?irs2report=eprint"
+                  "&set_name=eprint&set_value=71008&range=_ALL_&view=Counter&datatype=")
+
+          def fetch(url, headers):
+              req = urllib.request.Request(url, headers=headers)
+              return urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "ignore").strip()
+
+          def total(datatype):
+              url = base + datatype
+              # MADOC first; Jina Reader as a fallback when MADOC rejects the runner's IP.
+              # A non-browser User-Agent is what lets the request past MADOC's Anubis
+              # bot check (it only challenges clients claiming to be browsers).
+              ua = "zhouyuxuanyx-homepage-stats"
+              attempts = [(url, {"User-Agent": ua}),
+                          ("https://r.jina.ai/" + url, {"X-Return-Format": "text",
+                                                        "X-User-Agent": ua, "X-No-Cache": "true"})]
+              for u, h in attempts:
+                  try:
+                      body = fetch(u, h)
+                  except Exception as e:
+                      print(f"{datatype}: {u.split('/')[2]} failed: {e}")
+                      continue
+                  if re.fullmatch(r"\d+", body):
+                      return int(body)
+                  print(f"{datatype}: {u.split('/')[2]} returned no number")
+              sys.exit(f"could not fetch the {datatype} total")
+
+          stats = {"downloads": total("downloads"), "views": total("views")}
+          json.dump(stats, open("out/thesis_stats.json", "w"))
+          for key, label in [("downloads", "Downloads"), ("views", "Views")]:
+              json.dump({"schemaVersion": 1, "label": label, "message": str(stats[key]),
+                         "color": "b6073f", "cacheSeconds": 3600},
+                        open(f"out/{key}.json", "w"))
+          print(stats)
+          EOF
+      - name: Publish to thesis-stats
+        run: |
+          cd out
+          git init -q -b thesis-stats
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -q -m "Update thesis stats"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" thesis-stats
