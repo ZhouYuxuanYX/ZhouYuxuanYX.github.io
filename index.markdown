@@ -4,5 +4,5 @@
 
 layout: home
 # search-result snippet for the home page; the page itself still shows site.description
-description: "Yuxuan Zhou, Staff Research Engineer (Pretraining) at Baidu ERNIE: Multi-Token Prediction and Looped Architectures for LLMs. Ph.D., University of Mannheim. Hi, I’m Yuxuan. It’s a pity that the AI community hasn’t fully benefited from my valuable yet underappreciated ideas. This blog aims to present them more clearly and intuitively."
+description: "Research Focus: Multi-Token Prediction and Looped Architectures for LLMs. Ph.D., University of Mannheim. Hi, I’m Yuxuan. It’s a pity that the AI community hasn’t fully benefited from my valuable yet underappreciated ideas. This blog aims to present them more clearly and intuitively."
 ---
