@@ -1,13 +1,12 @@
 <header class="site-header" role="banner">
   <div class="wrapper" style="text-align: left;">
+    <nav class="site-nav" style="margin:0 0 8px; font-size:15px; letter-spacing:.05em; text-transform:uppercase;">
+      <a href="{{ '/' | relative_url }}" style="color:#b6073f; font-weight:bold; margin-right:22px;">Blog</a>
+      <a href="{{ '/cv/' | relative_url }}" style="color:#666;">CV</a>
+    </nav>
     <h1 class="site-title" rel="author" href="{{ '/' | relative_url }}">
       {{ site.title | escape }}
     </h1>
-
-    <nav class="site-nav" style="margin-top:4px; font-size:15px; letter-spacing:.04em; text-transform:uppercase;">
-      <a href="{{ '/' | relative_url }}" style="margin-right:22px;">Blog</a>
-      <a href="{{ '/cv/' | relative_url }}">CV</a>
-    </nav>
   </div>
 </header>
 
