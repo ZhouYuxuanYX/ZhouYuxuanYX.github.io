@@ -143,13 +143,14 @@
       <ul>
         <li><strong>Final-layer sharing</strong>: turns the indirect supervision of auxiliary MTP into direct
           multi-horizon supervision of the backbone, resulting in more substantial gains at a single
-          prediction depth and continued gains with added depth, where auxiliary MTP saturates.</li>
+          prediction depth and continued gains with added depth, where auxiliary MTP saturates; the gains
+          concentrate on reasoning and code in pretraining, with the other task classes holding, and extend
+          to all classes after supervised finetuning.</li>
         <li><strong>Dynamic Depth Sampling</strong>: makes deep supervision affordable while preserving its gains.</li>
         <li><strong>Emergent depth extrapolation</strong>: maintains high acceptance rates even when drafting
           beyond the trained depth, entirely eliminating the need for post-hoc drafters.</li>
       </ul>
-      In pretraining it gains on reasoning and code while holding on the other task classes, and widens
-      its lead across all classes after supervised finetuning. Deployed in production at 200B-A13B scale.
+      Deployed in production at 200B-A13B scale.
     </div>
   </div>
 
