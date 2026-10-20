@@ -137,11 +137,15 @@
   <div class="item">
     <div class="top"><span class="title"><span class="tag">ECHO</span> &mdash; Efficient Causal Self-Recursion Beyond Auxiliary Multi-Token Prediction <span class="venue">(<a href="https://github.com/ernie-research/ECHO">code</a>)</span></span></div>
     <div class="desc">
-      A multi-token prediction paradigm in which the backbone's own final layer predicts
-      every horizon. In pretraining it gains on reasoning and code while holding on the
-      other task classes, and widens its lead across all classes after supervised
-      finetuning; the same shared layer also lets the pretrained model draft for itself.
-      Deployed in production at 200B-A13B scale.
+      A causal self-recursive multi-token prediction (MTP) paradigm. Sharing the backbone's
+      final layer turns the indirect supervision of auxiliary MTP into direct multi-horizon
+      supervision of the backbone, giving larger gains at a single depth and continued gains
+      with added depth, where auxiliary MTP saturates. Dynamic Depth Sampling makes deep
+      supervision affordable while preserving its gains, and an emergent depth extrapolation
+      keeps acceptance rates high even when drafting beyond the trained depth, eliminating
+      the need for post-hoc drafters. In pretraining it gains on reasoning and code while
+      holding on the other task classes, and widens its lead across all classes after
+      supervised finetuning. Deployed in production at 200B-A13B scale.
     </div>
   </div>
 
