@@ -159,12 +159,11 @@
     <div class="desc">
       A learnable generalization of SoftMax for attention and output distributions:
       <ul>
-        <li><strong>Piece-wise modulation</strong>: instead of one temperature for every logit, MultiMax
-          learns a steeper slope below one threshold and a flatter slope above another, and reduces to
-          SoftMax when both slopes are 1.</li>
-        <li><strong>Sparse yet diverse</strong>: the steep segment suppresses the long tail of implausible
-          tokens, while the flat segment preserves the inherent diversity of plausible next tokens, a
-          balance no SoftMax temperature can strike.</li>
+        <li><strong>Breaking the trade-off</strong>: a unified SoftMax temperature can only trade sparsity
+          for multi-modality; MultiMax&rsquo;s piece-wise temperature breaks this trade-off and pushes out
+          the Pareto frontier.</li>
+        <li><strong>Sparse yet diverse</strong>: suppresses the long tail of implausible tokens while
+          preserving the inherent diversity of plausible next tokens.</li>
         <li><strong>Negligible cost</strong>: merely around 1% training slowdown, no extra memory, and a
           pretraining-loss gain above 0.01.</li>
       </ul>
