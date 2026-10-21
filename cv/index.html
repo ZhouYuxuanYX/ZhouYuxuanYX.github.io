@@ -155,11 +155,20 @@
   </div>
 
   <div class="item">
-    <div class="top"><span class="title"><span class="tag">MultiMax</span> &mdash; sparse yet diverse output distributions <span class="venue">(ICML 2024)</span></span></div>
+    <div class="top"><span class="title"><span class="tag">MultiMax</span> &mdash; Sparse and Multi-Modal Attention Learning <span class="venue">(ICML 2024 &middot; <a href="https://arxiv.org/abs/2406.01189">arXiv</a> &middot; <a href="https://github.com/ZhouYuxuanYX/MultiMax">code</a>)</span></span></div>
     <div class="desc">
-      A learnable alternative to SoftMax that suppresses the long tail of implausible tokens
-      while preserving the diversity of plausible ones. Deployed in production at 200B-A13B scale, at negligible cost: merely around 1% training slowdown, no extra memory, and a
-      pretraining-loss gain above 0.01.
+      A learnable generalization of SoftMax for attention and output distributions:
+      <ul>
+        <li><strong>Piece-wise modulation</strong>: instead of one temperature for every logit, MultiMax
+          learns a steeper slope below one threshold and a flatter slope above another, and reduces to
+          SoftMax when both slopes are 1.</li>
+        <li><strong>Sparse yet diverse</strong>: the steep segment suppresses the long tail of implausible
+          tokens, while the flat segment preserves the inherent diversity of plausible next tokens, a
+          balance no SoftMax temperature can strike.</li>
+        <li><strong>Negligible cost</strong>: merely around 1% training slowdown, no extra memory, and a
+          pretraining-loss gain above 0.01.</li>
+      </ul>
+      Deployed on the vocabulary head in production at 200B-A13B scale.
     </div>
   </div>
 
