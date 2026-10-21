@@ -163,8 +163,9 @@
           multi-modality of the generated distribution; MultiMax&rsquo;s piece-wise temperature breaks this trade-off and pushes out
           the Pareto frontier, suppressing the long tail of implausible tokens while preserving the
           inherent diversity of plausible next tokens.</li>
-        <li><strong>Negligible cost</strong>: merely around 1% training slowdown, no extra memory, and a
-          pretraining-loss gain above 0.01.</li>
+        <li><strong>Negligible cost</strong>: its piece-wise temperature acts element-wise on the logits,
+          so MultiMax fuses into the same blockwise (online-softmax) kernel as SoftMax, costing merely
+          around 1% training slowdown and no extra memory for a pretraining-loss gain above 0.01.</li>
       </ul>
       Deployed on the vocabulary head in production at 200B-A13B scale.
     </div>
