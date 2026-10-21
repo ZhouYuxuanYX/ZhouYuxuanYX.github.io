@@ -159,11 +159,10 @@
     <div class="desc">
       A learnable generalization of SoftMax for attention and output distributions:
       <ul>
-        <li><strong>Breaking the trade-off</strong>: a unified SoftMax temperature can only trade sparsity
+        <li><strong>Sparse yet diverse</strong>: a unified SoftMax temperature can only trade sparsity
           for multi-modality; MultiMax&rsquo;s piece-wise temperature breaks this trade-off and pushes out
-          the Pareto frontier.</li>
-        <li><strong>Sparse yet diverse</strong>: suppresses the long tail of implausible tokens while
-          preserving the inherent diversity of plausible next tokens.</li>
+          the Pareto frontier, suppressing the long tail of implausible tokens while preserving the
+          inherent diversity of plausible next tokens.</li>
         <li><strong>Negligible cost</strong>: merely around 1% training slowdown, no extra memory, and a
           pretraining-loss gain above 0.01.</li>
       </ul>
