@@ -163,8 +163,8 @@
           multi-modality of the generated distribution; MultiMax&rsquo;s piece-wise temperature breaks this trade-off and pushes out
           the Pareto frontier, suppressing the long tail of implausible tokens while preserving the
           inherent diversity of plausible next tokens.</li>
-        <li><strong>Negligible cost</strong>: acting element-wise on the logits, MultiMax runs inside the
-          chunked, Triton-fused cross-entropy kernel alongside SoftMax, costing merely around 1% training
+        <li><strong>Negligible cost</strong>: MultiMax modulates the logits element-wise inside the chunked,
+          Triton-fused cross-entropy kernel, just before its SoftMax, costing merely around 1% training
           slowdown and no extra memory for a pretraining-loss gain above 0.01.</li>
       </ul>
       Deployed on the vocabulary head in production at 200B-A13B scale.
