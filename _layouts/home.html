@@ -12,7 +12,21 @@ layout: default
   {{ content }}
 
   {%- if site.posts.size > 0 -%}
-    
+    <ul class="post-list" style="max-width: 600px; margin: 2em auto; padding: 0; list-style: none;">
+      {%- for post in site.posts -%}
+        <li style="margin-bottom: 1.5em;">
+          <a href="{{ post.url | relative_url }}" style="font-size: 1.2em; font-weight: bold; color: #333; text-decoration: none;">
+            {{ post.title }}
+          </a>
+          <p style="margin: 0.3em 0 0; color: #777; font-size: 0.9em;">
+            {{ post.date | date: "%B %d, %Y" }}
+          </p>
+          <p style="color: #555; font-size: 1em;">
+            {{ post.excerpt | strip_html | truncate: 150 }}
+          </p>
+        </li>
+      {%- endfor -%}
+    </ul>
   {%- endif -%}
 
 </div>
