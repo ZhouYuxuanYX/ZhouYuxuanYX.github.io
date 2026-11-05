@@ -451,12 +451,12 @@ also modulates the shared MTP logits.
 - **The run with joint clipping differs from the baseline only in the vocabulary head.** It starts
   from the same weights, its first loss matching the baseline's bit for bit, sees the same batches
   at every step, and clips the eight scalars together with the backbone.
-- **The run with separate clipping gives the eight scalars their own gradient-norm group.** It starts
-  from different initial weights (first loss $16.101$ against $16.088$), and from step 48k it
-  resumes with a different data order. It also divides the coefficients' gradient by the square
-  root of the vocabulary size. As AdamW ignores a constant scale of the gradient, this only
-  keeps the coefficients from being clipped, which happens on 47% of steps without it; a run without
-  it, on the same weights and batches, differs in mean loss by $0.0002$ from step 1k to 15.9k.
+- **The run with separate clipping gives the eight scalars their own gradient-norm group.** From
+  step 48k, it resumes with a different data order. It also divides the coefficients' gradient by
+  the square root of the vocabulary size. As AdamW ignores a constant scale of the gradient, this
+  only keeps the coefficients from being clipped, which happens on 47% of steps without it; a run
+  without it, on the same weights and batches, differs in mean loss by $0.0002$ from step 1k to
+  15.9k.
 
 <figure style="display: flex; flex-direction: column; align-items: center; text-align: center;">
   <img src="{{ '/assets/images/mm_pretrain_loss.png' | relative_url }}"
@@ -481,7 +481,7 @@ at $0.019$, is $0.013$ at step 48k, the last step on identical batches, and stay
 and $0.016$ from step 40k on. Over the last 1,000 steps, its loss is $2.2499$, a gap of $0.014$, the
 same order as the gain above 0.01 on the 280B-A14B model; its LM loss is $1.6730$ and its MTP loss
 $1.9228$, while the baseline logs only the total. The $0.003$ between the two MultiMax runs is not
-attributed to the clipping, since the runs also differ in initial weights and data order.
+attributed to the clipping: from step 48k the runs see different data, and each is a single run.
 
 ## Reproducing the synthetic measurements
 
@@ -545,7 +545,7 @@ reproduce Proposition 3.5 numerically, but make no claim about downstream qualit
 values of $M$ and $S$ depend on $\epsilon$ and $s$. Each pretraining configuration is a single run,
 and the nanoGPT runs lack the training rules of the LLM implementation. The 10B-A1B runs keep a
 constant learning rate, without a decay phase, which may change the gap. The run with separate
-clipping also differs from the baseline in initial weights and, from step 48k, in data order. The
+clipping also differs from the baseline in data order from step 48k. The
 speed comparison comes from one set of 192 GPUs, and the slowdown may differ on other machines.
 
 ### A note on paper versions
