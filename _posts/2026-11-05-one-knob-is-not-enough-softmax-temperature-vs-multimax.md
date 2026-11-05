@@ -104,9 +104,9 @@ The main results are:
 - **One logit row** (Table 1, Figure 2): MultiMax improves on the default SoftMax in both metrics,
   which no temperature does: sparsity rises from $0.376$ to $0.823$ and multi-modality from $0.792$
   to $0.866$, and at matched sparsity MultiMax adds $0.217$ multi-modality.
-- **GPT-2 on OpenWebText** (Figures 6 and 7): after smoothing, the validation loss is $0.009$ lower
+- **GPT-2 on OpenWebText** (Figures 6 and 7): after smoothing, the validation loss is $0.008$ lower
   with MultiMax in attention and $0.019$ lower with MultiMax in attention and the output layer, on
-  average from step 80k to the end of the 600k-step run.
+  average from step 10k to the end of the 600k-step run.
 - **A 10B-A1B mixture-of-experts model over 600B tokens** (Figures 9 and 10): the training loss,
   including a multi-token-prediction term, is $0.011$ lower in a run that differs from the baseline
   only in the vocabulary head and $0.014$ lower in a second run.
@@ -343,20 +343,20 @@ released, without the training rules introduced in the next section.
   <figcaption style="max-width: 780px; margin: 0.6em auto; text-align: left;">
     <b>Figure 7:</b> The runs of Figure 6 smoothed with an EMA with a time constant of 20k steps.
     <b>Left</b>: every evaluation (faint) and the EMA (bold); the legend gives the smoothed loss at
-    step 600k. <b>Right</b>: each MultiMax run minus the baseline after smoothing, from step 80k on.
+    step 600k. <b>Right</b>: each MultiMax run minus the baseline after smoothing, from step 10k on.
   </figcaption>
 </figure>
 
 **Both placements lower the loss** (Figures 6 and 7). The baseline reproduces the published
 reference: the nanoGPT README expects this recipe to "go down to loss of ~2.85" [5], and the
-smoothed grey curve ends at $2.858$. From step 80k on, MultiMax in attention alone lies $0.009$
+smoothed grey curve ends at $2.858$. From step 10k on, MultiMax in attention alone lies $0.008$
 below it on average, and MultiMax in attention and the output layer $0.019$ below; at step 600k,
 the smoothed losses are $2.858$, $2.850$ and $2.844$. No output-only run was trained, so the share
 of the output layer is by difference.
 
 **The output layer adds slightly more than attention, mostly early in training.** On top of
-attention, it lowers the smoothed loss by $0.010$ on average, against $0.009$ for attention itself;
-before step 200k the gap is clearer, $0.013$ against $0.009$, and from step 300k on the two shares
+attention, it lowers the smoothed loss by $0.011$ on average, against $0.008$ for attention itself;
+before step 200k the gap is clearer, $0.013$ against $0.007$, and from step 300k on the two shares
 are within $0.001$ of each other. On DeiT-small, the two placements add $0.3$ top-1 each and $0.6$
 together [1], while no attention temperature, fixed or learned, beats the default by more than
 $0.1$.
