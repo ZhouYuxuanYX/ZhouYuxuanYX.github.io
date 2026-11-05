@@ -36,9 +36,12 @@ github_username:  ZhouYuxuanYX
 
 # Build settings
 theme: minima
+# Post URLs without the category path
+permalink: /:year/:month/:day/:title:output_ext
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 minima:  
   social_links:

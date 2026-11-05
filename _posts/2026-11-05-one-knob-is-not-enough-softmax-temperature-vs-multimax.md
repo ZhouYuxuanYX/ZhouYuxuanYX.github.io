@@ -3,6 +3,8 @@ layout: post
 title: "One Knob Is Not Enough: How MultiMax Breaks the SoftMax Temperature Trade-off"
 date: 2026-11-05 00:00:00 +0000
 categories: [LLM, Attention Mechanism, Machine Learning]
+redirect_from:
+  - "/llm/attention mechanism/machine learning/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html"
 ---
 
 At ICML 2024 we proposed **MultiMax** [1], a family of piece-wise-temperature functions that
