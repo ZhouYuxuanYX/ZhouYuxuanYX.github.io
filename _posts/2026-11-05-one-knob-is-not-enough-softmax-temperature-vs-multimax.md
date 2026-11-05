@@ -485,16 +485,15 @@ $1.9228$, while the baseline logs only the total. The $0.003$ between the two Mu
 attributed to the clipping: from step 48k the runs see different data, and each is a single run.
 
 **On 27 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
-than the SoftMax baseline on average.** Five of the platform's 32 benchmarks are excluded for
-documented protocol or grading issues: CruxEval is served with temperature 0, which the platform's
-serving stack maps to temperature-1 sampling rather than greedy decoding, and its graders are
-unreliable on BBH (CoT) and MathBench_cn — on these runs the two swing by about 15 points in
-opposite directions. At step 78k, the average is 0.6 points higher with greedy decoding, 0.7 points
-with top-p sampling at 0.8 and 1.9 points with sampling at temperature 0.8, where the run is ahead
-on 19 of the 27. Table 3 breaks the average down by task type. The gap is largest when sampling
-without top-p, likely because MultiMax already concentrates the probability mass on plausible
-tokens. Multiple choice improves on every benchmark, while open-ended QA, mostly short-answer
-factual recall, drops.
+than the SoftMax baseline on average.** Five of the platform's 32 benchmarks are excluded for issues
+observed in these evaluations: CruxEval was served with temperature 0, which the serving stack
+mapped to temperature-1 sampling rather than greedy decoding, and on BBH (CoT) and MathBench_cn the
+two rows swing by about 15 points in opposite directions, a known grading failure mode. At step 78k,
+the average is 0.6 points higher with greedy decoding, 0.7 points with top-p sampling at 0.8 and 1.9
+points with sampling at temperature 0.8, where the run is ahead on 19 of the 27. Table 3 breaks the
+average down by task type. The gap is largest when sampling without top-p, likely because MultiMax
+already concentrates the probability mass on plausible tokens. Multiple choice improves on every
+benchmark, while open-ended QA, mostly short-answer factual recall, drops.
 
 | Task type | n | Greedy | Top-p 0.8 | Temperature 0.8 |
 | Reasoning: mathematics | 4 | +1.8 | +2.6 | +5.8 |
