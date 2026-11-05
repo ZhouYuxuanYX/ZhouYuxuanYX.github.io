@@ -94,10 +94,10 @@ one metric without giving up the other; MultiMax with both terms improves on $T{
 **For lack of compute, the paper's experiments stop at 156M parameters; MultiMax now lowers the
 pretraining loss at 10B and at 280B parameters.** This post adds a 10B-A1B mixture-of-experts model
 pretrained with and without MultiMax over 600B tokens. In pretraining the 280B-A14B production model,
-MultiMax lowers the loss by more than 0.01 at around 1% training slowdown and no extra memory. The
-cost stays small because MultiMax adds no layer of its own: it applies its piece-wise temperature
-to the logits inside the kernel that already computes the cross-entropy loss, just before the
-SoftMax.
+MultiMax lowers the loss by more than 0.01 with a training slowdown below 1% and no extra memory.
+The cost stays small because MultiMax adds no layer of its own: it applies its piece-wise
+temperature to the logits inside the kernel that already computes the cross-entropy loss, just
+before the SoftMax.
 
 The main results are:
 
