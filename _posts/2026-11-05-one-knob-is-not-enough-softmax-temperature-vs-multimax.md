@@ -485,13 +485,29 @@ $1.9228$, while the baseline logs only the total. The $0.003$ between the two Mu
 attributed to the clipping: from step 48k the runs see different data, and each is a single run.
 
 **On 27 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
-than the SoftMax baseline on average.** Five more benchmarks of the platform are left out because a
-score is missing or their decoding or grading is unreliable. At step 78k, the average is 0.6 points
-higher with greedy decoding, 0.7 points with top-p sampling at 0.8 and 1.9 points with sampling at
-temperature 0.8. The gap is largest when sampling without top-p, likely because MultiMax already
-concentrates the probability mass on plausible tokens and so needs top-p less than SoftMax does.
-With either kind of sampling, multiple choice improves on every benchmark and code by about 2
-points, while open-ended QA, mostly short-answer factual recall, drops.
+than the SoftMax baseline on average.** Five of the platform's 32 benchmarks are excluded for
+documented protocol or grading issues: CruxEval is served with temperature 0, which the platform's
+serving stack maps to temperature-1 sampling rather than greedy decoding, and its graders are
+unreliable on BBH (CoT) and MathBench_cn — on these runs the two swing by about 15 points in
+opposite directions. At step 78k, the average is 0.6 points higher with greedy decoding, 0.7 points
+with top-p sampling at 0.8 and 1.9 points with sampling at temperature 0.8, where the run is ahead
+on 19 of the 27. Table 3 breaks the average down by task type. The gap is largest when sampling
+without top-p, likely because MultiMax already concentrates the probability mass on plausible
+tokens. Multiple choice improves on every benchmark, while open-ended QA, mostly short-answer
+factual recall, drops.
+
+| Task type | n | Greedy | Top-p 0.8 | Temperature 0.8 |
+| Reasoning: mathematics | 4 | +1.8 | +2.6 | +5.8 |
+| Reasoning: other | 6 | +0.3 | +0.3 | +1.5 |
+| Code | 3 | $-0.3$ | +2.0 | +2.5 |
+| Multiple choice | 6 | +0.7 | +3.7 | +4.0 |
+| Open-ended QA | 8 | +0.4 | $-2.6$ | $-1.7$ |
+| All | 27 | +0.6 | +0.7 | +1.9 |
+
+*Table 3: Average score difference from the baseline, by task type, in points. Counting a difference
+of at most one point as level, the run is up on 9, level on 14 and down on 4 with greedy decoding,
+and 16, 5 and 6 at temperature 0.8.*
+
 
 ## Reproducing the synthetic measurements
 
