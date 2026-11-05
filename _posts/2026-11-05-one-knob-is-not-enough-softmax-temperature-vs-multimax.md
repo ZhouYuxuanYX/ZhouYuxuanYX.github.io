@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MultiMax: Piece-wise Temperature Beyond the Sparsity–Multi-Modality Trade-off of SoftMax"
+title: "One Knob Is Not Enough: SoftMax Temperature vs. MultiMax"
 date: 2026-11-05 00:00:00 +0000
 categories: [LLM, Attention Mechanism, Machine Learning]
 ---
@@ -624,3 +624,7 @@ Language Models.* Annual Meeting of the Association for Computational Linguistic
   };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Page views at the bottom right (vercount, a busuanzi-compatible counter); hidden until the count loads -->
+<div><span id="vercount_container_page_pv" style="display: none; position: fixed; right: 14px; bottom: 12px; z-index: 20; font-size: 12px; color: #6b7280; background: rgba(255, 255, 255, 0.92); border: 1px solid #e5e7eb; border-radius: 4px; padding: 2px 8px;"><span id="vercount_value_page_pv"></span> views</span></div>
+<script defer src="https://events.vercount.one/js"></script>
