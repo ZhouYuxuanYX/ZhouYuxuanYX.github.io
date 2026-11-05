@@ -107,7 +107,7 @@ The main results are:
 - **GPT-2 on OpenWebText** (Figures 6 and 7): after smoothing, the validation loss is $0.008$ lower
   with MultiMax in attention and $0.019$ lower with MultiMax in attention and the output layer, on
   average from step 10k to the end of the 600k-step run.
-- **A 10B-A1B mixture-of-experts model over 600B tokens** (Figures 9 and 10): the training loss,
+- **A 10B-A1B mixture-of-experts model over 600B tokens** (Figure 9): the training loss,
   including a multi-token-prediction term, is $0.011$ lower in a run that differs from the baseline
   only in the vocabulary head and $0.014$ lower in a second run.
 
@@ -413,26 +413,11 @@ kernel applies SegLU to each block of logits in registers, with a closed-form ba
 No tensor is added, so the round trips through memory behind Table 2 disappear. The kernel code is
 available in a [public fork of PaddleFleet](https://github.com/ZhouYuxuanYX/PaddleFleet/blob/7b4bc6de4e31f45d7976b9a31bc5f359151a3aae/src/paddlefleet/triton_ops/fused_linear_cross_entropy/cross_entropy.py#L118).
 
-**Measured in 10B-A1B pretraining, the slowdown is around 1% and peak memory does not grow.** Figure
-9 compares the MultiMax run with separate clipping of the next section against a SoftMax run with
-identical training settings, which differs only in its MTP block, an MoE instead of a dense MLP; the
-loss baseline of the next section uses full recomputation and another attention kernel, so it is not
-comparable for speed. Over steps 48.2k to 66.8k, where both runs use the same 192 GPUs and parallel
-layout, the median step rate of MultiMax is $0.3117$ against $0.3148$ steps per second, $0.98\%$
-lower; the SoftMax run alone ranges from $0.29$ to $0.32$ steps per second, so this bounds the
-slowdown at about 1% rather than resolving it. Peak memory is $26.6$ GB against $26.9$ GB per GPU.
-
-<figure style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-  <img src="{{ '/assets/images/mm_pretrain_speed_mem.png' | relative_url }}"
-       alt="Training speed of the MultiMax run with separate clipping and a SoftMax run with identical settings on the same 192 GPUs, steps 48.2k to 66.8k"
-       style="width:100%; max-width:820px; height:auto;">
-  <figcaption style="max-width: 780px; margin: 0.6em auto; text-align: left;">
-    <b>Figure 9:</b> Training speed on the same 192 GPUs, as a rolling median over 501 steps; the
-    SoftMax run uses an MoE instead of a dense MLP in its MTP block. The MultiMax run resumes from a
-    checkpoint at step 48k and reaches its steady rate by step 49.8k. The mean rates, which include
-    occasional slow steps, are $0.3056$ and $0.3030$ steps per second.
-  </figcaption>
-</figure>
+**Measured in 10B-A1B pretraining, the slowdown is around 1% and peak memory does not grow.** On
+the same 192 GPUs, the MultiMax run with separate clipping of the next section trains at a median of
+$0.3117$ steps per second over steps 48.2k to 66.8k, against $0.3148$ for a SoftMax run, and its
+peak memory is $26.6$ GB against $26.9$ GB per GPU. Training speed also differs between machines, so
+runs on other machines, such as the loss baseline of the next section, are not compared for speed.
 
 **The eight scalars follow their own training rules.** They are initialised to zero, where SegLU is
 the identity; for lack of compute, the truncated normal initialisation (std 0.02) of the reference
@@ -478,7 +463,7 @@ also modulates the shared MTP logits.
        alt="Training loss over 78k steps for the SoftMax baseline and two MultiMax runs on the vocabulary head of a 10B-A1B MoE, and their differences from the baseline"
        style="width:100%; max-width:1000px; height:auto;">
   <figcaption style="max-width: 780px; margin: 0.6em auto; text-align: left;">
-    <b>Figure 10:</b> Training loss of the 10B-A1B MoE over 78k steps (600B tokens), smoothed with an
+    <b>Figure 9:</b> Training loss of the 10B-A1B MoE over 78k steps (600B tokens), smoothed with an
     EMA of 0.999; it includes the MTP term, the language-modelling (LM) loss plus 0.3 × the MTP loss.
     <b>Left</b>: SoftMax baseline (grey) and MultiMax on the vocabulary head with separate clipping
     (red) and joint clipping (blue); the legend gives the mean over the last 1,000 steps.
@@ -488,7 +473,7 @@ also modulates the shared MTP logits.
   </figcaption>
 </figure>
 
-**In both runs, the loss gap opens within the first 4k steps and holds** (Figure 10). With joint
+**In both runs, the loss gap opens within the first 4k steps and holds** (Figure 9). With joint
 clipping, it stays between $0.010$ and $0.012$ from step 40k on and is $0.011$ over the last 1,000
 steps, $2.2529$ against $2.2636$; this run and the baseline continue on identical batches to step
 97k (766B tokens), where the gap is $0.012$. With separate clipping, the gap is widest near step 8k,
@@ -561,7 +546,7 @@ values of $M$ and $S$ depend on $\epsilon$ and $s$. Each pretraining configurati
 and the nanoGPT runs lack the training rules of the LLM implementation. The 10B-A1B runs keep a
 constant learning rate, without a decay phase, which may change the gap. The run with separate
 clipping also differs from the baseline in initial weights and, from step 48k, in data order. The
-speed comparison rests on one allocation and a SoftMax run with a different MTP block.
+speed comparison comes from one set of 192 GPUs, and the slowdown may differ on other machines.
 
 ### A note on paper versions
 
