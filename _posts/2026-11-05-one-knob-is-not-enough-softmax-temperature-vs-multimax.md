@@ -484,16 +484,11 @@ same order as the gain above 0.01 on the 280B-A14B model; its LM loss is $1.6730
 $1.9228$, while the baseline logs only the total. The $0.003$ between the two MultiMax runs is not
 attributed to the clipping: from step 48k the runs see different data, and each is a single run.
 
-**Downstream benchmarks gain most when sampling from the full distribution.** At step 78k, over 30
-internal benchmarks, the run with separate clipping is 0.4 points above the SoftMax baseline with
-top-p sampling at 0.8 and 0.5 points with greedy decoding (29 benchmarks, one score missing), but
-1.9 points with sampling at temperature 0.8, where it is ahead on 21 of the 30. Compared with
-temperature 0.8, top-p sampling lifts the baseline by 2.9 points and MultiMax by 1.2 on the 18
-benchmarks scored without a judge model, consistent with MultiMax already suppressing the
-low-probability tail that top-p cuts off at decoding time. Under both kinds of sampling, multiple
-choice improves on every benchmark (+3.4 to +4.0 points) and code by 2.0 to 2.5 points; reasoning
-gains 3.3 points at temperature 0.8 but 0.3 with top-p, and open-ended QA, mostly short-answer
-factual recall, drops by 1.7 to 2.6 points.
+**On 29 internal benchmarks, the run with separate clipping scores higher than the SoftMax baseline
+on average.** At step 78k, its average is 0.5 points higher with greedy decoding, 0.4 points with
+top-p sampling at 0.8 and 1.9 points with sampling at temperature 0.8. With either kind of sampling,
+multiple choice improves on every benchmark and code by about 2 points, while open-ended QA, mostly
+short-answer factual recall, drops.
 
 ## Reproducing the synthetic measurements
 
