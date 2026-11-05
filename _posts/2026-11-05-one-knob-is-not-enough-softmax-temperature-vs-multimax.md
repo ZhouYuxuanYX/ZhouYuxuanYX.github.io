@@ -416,9 +416,9 @@ available in a [public fork of PaddleFleet](https://github.com/ZhouYuxuanYX/Padd
 **Measured in 10B-A1B pretraining with the first implementation, the slowdown is about 3% and peak
 memory does not grow.** The run with joint clipping of the next section differs from the baseline
 only in the vocabulary head; both use the same dense MTP block. Over steps 2k to 34k, its median
-rate is $0.2093$ against $0.2160$ steps per second, 3.1% lower, and peak memory is $36.2$ GB in both
-runs. The latest implementation, used in the run with separate clipping, has not been timed against
-a matched baseline.
+rate is $0.2093$ against $0.2160$ steps per second, around 3% lower, and peak memory is $36.2$ GB in
+both runs. The latest implementation, used in the run with separate clipping, has not been timed
+against a matched baseline.
 
 **The eight scalars follow their own training rules.** They are initialised to zero, where SegLU is
 the identity; for lack of compute, the truncated normal initialisation (std 0.02) of the reference
