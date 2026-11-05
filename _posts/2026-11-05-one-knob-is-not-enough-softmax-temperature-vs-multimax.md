@@ -484,13 +484,14 @@ same order as the gain above 0.01 on the 280B-A14B model; its LM loss is $1.6730
 $1.9228$, while the baseline logs only the total. The $0.003$ between the two MultiMax runs is not
 attributed to the clipping: from step 48k the runs see different data, and each is a single run.
 
-**On 29 internal benchmarks, the run with separate clipping scores higher than the SoftMax baseline
-on average.** At step 78k, its average is 0.5 points higher with greedy decoding, 0.4 points with
-top-p sampling at 0.8 and 1.9 points with sampling at temperature 0.8. The gap is largest when
-sampling without top-p, likely because MultiMax already concentrates the probability mass on
-plausible tokens and so needs top-p less than SoftMax does. With either kind of sampling, multiple
-choice improves on every benchmark and code by about 2 points, while open-ended QA, mostly
-short-answer factual recall, drops.
+**On 27 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
+than the SoftMax baseline on average.** Five more benchmarks of the platform are left out because a
+score is missing or their decoding or grading is unreliable. At step 78k, the average is 0.6 points
+higher with greedy decoding, 0.7 points with top-p sampling at 0.8 and 1.9 points with sampling at
+temperature 0.8. The gap is largest when sampling without top-p, likely because MultiMax already
+concentrates the probability mass on plausible tokens and so needs top-p less than SoftMax does.
+With either kind of sampling, multiple choice improves on every benchmark and code by about 2
+points, while open-ended QA, mostly short-answer factual recall, drops.
 
 ## Reproducing the synthetic measurements
 
