@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "One Knob Is Not Enough: SoftMax Temperature vs. MultiMax"
+title: "One Knob Is Not Enough: How MultiMax Breaks the SoftMax Temperature Trade-off"
 date: 2026-11-05 00:00:00 +0000
 categories: [LLM, Attention Mechanism, Machine Learning]
 ---
