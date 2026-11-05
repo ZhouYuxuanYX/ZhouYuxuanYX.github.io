@@ -410,7 +410,8 @@ the full logit tensor is never stored: the chunked fused linear cross-entropy (v
 [Liger Kernel](https://github.com/linkedin/Liger-Kernel)) receives
 `(hidden_states, weight, bias, multimax_ranges, multimax_ts)` instead of logits, and the Triton
 kernel applies SegLU to each block of logits in registers, with a closed-form backward (Figure 8).
-No tensor is added, so the round trips through memory behind Table 2 disappear.
+No tensor is added, so the round trips through memory behind Table 2 disappear. The kernel code is
+available in a [public fork of PaddleFleet](https://github.com/ZhouYuxuanYX/PaddleFleet/tree/feat/multimax-lm-head/src/paddlefleet/triton_ops/fused_linear_cross_entropy).
 
 **Measured in 10B-A1B pretraining, the slowdown is around 1% and peak memory does not grow.** Figure
 9 compares the MultiMax run with separate clipping of the next section against a SoftMax run with
