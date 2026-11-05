@@ -413,11 +413,12 @@ kernel applies SegLU to each block of logits in registers, with a closed-form ba
 No tensor is added, so the round trips through memory behind Table 2 disappear. The kernel code is
 available in a [public fork of PaddleFleet](https://github.com/ZhouYuxuanYX/PaddleFleet/blob/7b4bc6de4e31f45d7976b9a31bc5f359151a3aae/src/paddlefleet/triton_ops/fused_linear_cross_entropy/cross_entropy.py#L118).
 
-**Measured in 10B-A1B pretraining, the slowdown is around 1% and peak memory does not grow.** On
-the same 192 GPUs, the MultiMax run with separate clipping of the next section trains at a median of
-$0.3117$ steps per second over steps 48.2k to 66.8k, against $0.3148$ for a SoftMax run, and its
-peak memory is $26.6$ GB against $26.9$ GB per GPU. Training speed also differs between machines, so
-runs on other machines, such as the loss baseline of the next section, are not compared for speed.
+**Measured in 10B-A1B pretraining with the first implementation, the slowdown is about 3% and peak
+memory does not grow.** The run with joint clipping of the next section differs from the baseline
+only in the vocabulary head; both use the same dense MTP block. Over steps 2k to 34k, its median
+rate is $0.2093$ against $0.2160$ steps per second, 3.1% lower, and peak memory is $36.2$ GB in both
+runs. The latest implementation, used in the run with separate clipping, has not been timed against
+a matched baseline.
 
 **The eight scalars follow their own training rules.** They are initialised to zero, where SegLU is
 the identity; for lack of compute, the truncated normal initialisation (std 0.02) of the reference
@@ -546,7 +547,8 @@ values of $M$ and $S$ depend on $\epsilon$ and $s$. Each pretraining configurati
 and the nanoGPT runs lack the training rules of the LLM implementation. The 10B-A1B runs keep a
 constant learning rate, without a decay phase, which may change the gap. The run with separate
 clipping also differs from the baseline in data order from step 48k. The
-speed comparison comes from one set of 192 GPUs, and the slowdown may differ on other machines.
+speed of 10B-A1B pretraining was measured only with the first implementation, and the two runs used
+different machines of one cluster.
 
 ### A note on paper versions
 
