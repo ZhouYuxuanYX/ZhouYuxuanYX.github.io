@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "MultiMax: Piece-wise Temperature Beyond the Sparsity–Multi-Modality Trade-off of SoftMax"
-date: 2026-11-05 12:00:00 +0000
+date: 2026-11-05 00:00:00 +0000
 categories: [LLM, Attention Mechanism, Machine Learning]
 ---
 
