@@ -493,7 +493,7 @@ decoding, 0.9 points with top-p sampling at 0.8 and 2.4 points with sampling at 
 where the run is ahead on 19 of the 26. Table 2 lists every benchmark. The gap is largest when
 sampling without top-p, likely because MultiMax already concentrates the probability mass on
 plausible tokens. With either kind of sampling, mathematics, reasoning, multiple choice and code
-improve, while short-answer factual QA drops.
+improve, while short-answer factual QA, where only one answer counts, drops.
 
 | benchmark | CoT | greedy | top-p 0.8 | temperature 0.8 |
 |---|---|---|---|---|
