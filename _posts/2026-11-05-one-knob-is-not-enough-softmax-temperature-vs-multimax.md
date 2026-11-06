@@ -541,16 +541,17 @@ MultiMax should help beyond the vocabulary head.** The 10B-A1B gain comes from t
 alone, one SoftMax at the end of the network, while attention applies one in every layer and head.
 In attention, a query should ignore the many irrelevant keys but still attend to the several
 relevant ones; the nanoGPT runs above and DeiT-small in [1] already gain there, and since SegLU is
-element-wise, it can sit in a fused attention kernel where logit soft-capping already does. In a
-mixture-of-experts layer with a SoftMax router, the gate should give no weight to unsuited experts
-while sharing it among the few that fit, which is what top-k routing asks for. In reinforcement
-learning, the exploration–exploitation trade-off is the same problem: with one temperature, a policy
-can explore only by also sampling implausible tokens, and exploit only by collapsing onto its top
-choice. MultiMax can keep exploring among the plausible tokens while suppressing the implausible
-ones, and rollouts are usually sampled from the full distribution of the policy, the regime in which
-the benchmarks above gain most. So far, attention has been tested only at GPT-2 scale, and routing
-and reinforcement learning not at all. Both the reference implementation [4] and the fused kernel
-are public, and we welcome tests of MultiMax in other models and domains.
+element-wise, it could be fused into attention kernels at the point where logit soft-capping is
+applied. In a mixture-of-experts layer with a SoftMax router, the gate should give no weight to
+unsuited experts while sharing it among the few that fit, which is what top-k routing asks for. In
+reinforcement learning, the exploration–exploitation trade-off is in essence the same problem: with
+one temperature, a policy can explore only by also sampling implausible tokens, and exploit only by
+concentrating on its top choice. MultiMax can keep exploring among the plausible tokens while
+suppressing the implausible ones, and rollouts are usually sampled without top-p or top-k
+truncation, the regime in which the benchmarks above gain most. So far, attention has been tested
+only in models of up to 156M parameters, and routing and reinforcement learning not at all. Both the
+reference implementation [4] and the fused kernel are public, and we welcome tests of MultiMax in
+other models and domains.
 
 ## Reproducing the synthetic measurements
 
