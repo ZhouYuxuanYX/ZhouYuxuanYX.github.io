@@ -547,7 +547,8 @@ while sharing it among the few that fit, which is what top-k routing asks for. I
 learning, rollouts are usually sampled from the full distribution of the policy, the regime in which
 the benchmarks above gain most: suppressing implausible tokens while keeping several plausible ones
 is what exploration needs. So far, attention has been tested only at GPT-2 scale, and routing and
-reinforcement learning not at all.
+reinforcement learning not at all. Both the reference implementation [4] and the fused kernel are
+public, and we welcome tests of MultiMax in other models and domains.
 
 ## Reproducing the synthetic measurements
 
