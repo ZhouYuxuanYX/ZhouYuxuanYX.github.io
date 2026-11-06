@@ -480,10 +480,12 @@ attributed to the clipping: from step 48k the runs see different data, and each 
 benchmark that enters the averages, grouped by task format; earlier versions averaged over slightly
 different sets of benchmarks. LiveCodeBench is left out because its prompt contains a
 `# YOUR CODE HERE` placeholder that base models tend to copy back instead of writing code, so both
-runs score below 3%. IFEval is left out as well: it is designed for greedy decoding, and under
-sampling its format checks reward the random variety of a fat tail, which MultiMax suppresses by
-design, so MultiMax is at a built-in disadvantage there; sampling raises the baseline's score from
-28.1 to 30.4–31.2 and lowers MultiMax's from 29.9 to 24.2–25.0.*
+runs score below 3%. IFEval is left out as well. It checks each response against rules, many of
+which a single token can break, such as using no comma or writing only in lowercase, and it is
+normally evaluated with greedy decoding. Under sampling, a model that keeps several plausible
+tokens, as MultiMax does by design, picks a rule-breaking alternative more often than one that
+concentrates on its top choice: MultiMax leads by 1.8 points with greedy decoding but trails by 6.2
+with sampling.*
 
 **On 26 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
 than the SoftMax baseline on average.** At step 78k, the average is 1.1 points higher with greedy
