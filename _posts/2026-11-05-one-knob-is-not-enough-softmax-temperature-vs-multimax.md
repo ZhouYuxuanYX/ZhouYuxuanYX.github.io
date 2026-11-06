@@ -215,7 +215,7 @@ t_d x + (1 - t_d) d & x > d
 \tag{4}
 $$
 
-The bias terms make $\sigma$ continuous, and subgradients handle the two kinks [4]. All four
+The bias terms make $\sigma$ continuous, and subgradients handle the two kinks [2]. All four
 parameters are learned with the network, so MultiMax adds no hyperparameter, and $t_b = t_d = 1$
 recovers SoftMax exactly: a unified temperature is one slope for the whole logit range, MultiMax one
 slope per range.
@@ -318,7 +318,7 @@ signal is small: weight decay towards the identity could erase it.
 
 ## GPT-2 on OpenWebText: attention and the output layer each lower the loss
 
-This section tests the reference implementation [2] of MultiMax, in attention and in the output
+This section tests the reference implementation [4] of MultiMax, in attention and in the output
 layer, in a full GPT-2 pretraining run with Karpathy's nanoGPT [5], without the training rules
 introduced in the next section.
 
@@ -377,7 +377,7 @@ This section describes how MultiMax runs on the vocabulary head in LLM pretraini
   </figcaption>
 </figure>
 
-**The modulator is called SegLU.** The reference implementation [2] names it `SeLU`, which collides
+**The modulator is called SegLU.** The reference implementation [4] names it `SeLU`, which collides
 with the established SELU (Scaled Exponential Linear Unit); here it is **SegLU**
 (segmented learnable unit), with the same math:
 
@@ -412,7 +412,7 @@ relative cost falls with scale, to below 1% for the 280B-A14B model.
 
 **The eight scalars follow their own training rules.** They are initialised to zero, where SegLU is
 the identity; for lack of compute, the truncated normal initialisation (std 0.02) of the reference
-implementation [2] was not tested at LLM scale and may give a further gain.
+implementation [4] was not tested at LLM scale and may give a further gain.
 
 - **No weight decay.** At the learning rate of $6 \times 10^{-4}$ and weight decay of $0.1$ used
   below, decoupled decay alone would shrink a coefficient to about 1% of its value over 78k steps,
@@ -433,8 +433,8 @@ tokens.
 model [6], with 10B parameters in total and 1B active per token: 24 layers of hidden size 1,024 with
 multi-head latent attention [7], 256 fine-grained routed experts of which eight are active per
 token plus one shared expert [8], a vocabulary of 201,216 tokens and one MTP module as in
-DeepSeek-V3 [7], with a dense MLP and a loss weight of $0.3$. Training runs for 78k steps at a
-global batch of 1,920 sequences of 4,096 tokens in bfloat16, with Muon [9] for the matrix
+DeepSeek-V3 [9], with a dense MLP and a loss weight of $0.3$. Training runs for 78k steps at a
+global batch of 1,920 sequences of 4,096 tokens in bfloat16, with Muon [10] for the matrix
 parameters and AdamW for the rest, a learning rate of $6 \times 10^{-4}$ held constant after a
 1,000-step warmup, weight decay $0.1$ and gradient clipping at $1.0$. In both MultiMax runs, SegLU
 also modulates the shared MTP logits.
@@ -593,13 +593,13 @@ Thanks to [Xudong Yan](https://github.com/demo4ai) for running the nanoGPT exper
 Learning.* International Conference on Machine Learning (ICML), PMLR, 2024.
 [arXiv:2406.01189v3](https://arxiv.org/abs/2406.01189v3)
 
-[2] Reference implementation: [github.com/ZhouYuxuanYX/MultiMax](https://github.com/ZhouYuxuanYX/MultiMax)
+[2] Boyd, Stephen, Lin Xiao, and Almir Mutapcic. *Subgradient Methods.* Lecture notes, Stanford
+University, 2003.
 
 [3] Touvron, Hugo, et al. *Training Data-Efficient Image Transformers & Distillation Through
 Attention.* ICML, PMLR, 2021.
 
-[4] Boyd, Stephen, Lin Xiao, and Almir Mutapcic. *Subgradient Methods.* Lecture notes, Stanford
-University, 2003.
+[4] Reference implementation: [github.com/ZhouYuxuanYX/MultiMax](https://github.com/ZhouYuxuanYX/MultiMax)
 
 [5] Karpathy, Andrej. *nanoGPT.* [github.com/karpathy/nanoGPT](https://github.com/karpathy/nanoGPT)
 — GPT-2 (124M) on OpenWebText, `train.py` defaults, reference val loss ~2.85.
@@ -607,13 +607,16 @@ University, 2003.
 [6] Blakeman, Aaron, et al. *NVIDIA Nemotron 3: Efficient and Open Intelligence.* 2025.
 [arXiv:2512.20856](https://arxiv.org/abs/2512.20856)
 
-[7] Liu, Aixin, et al. *DeepSeek-V3 Technical Report.* 2024.
-[arXiv:2412.19437](https://arxiv.org/abs/2412.19437)
+[7] Liu, Aixin, et al. *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language
+Model.* 2024. [arXiv:2405.04434](https://arxiv.org/abs/2405.04434)
 
 [8] Dai, Damai, et al. *DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts
 Language Models.* Annual Meeting of the Association for Computational Linguistics (ACL), 2024.
 
-[9] Jordan, Keller, et al. *Muon: An Optimizer for Hidden Layers in Neural Networks.* 2024.
+[9] Liu, Aixin, et al. *DeepSeek-V3 Technical Report.* 2024.
+[arXiv:2412.19437](https://arxiv.org/abs/2412.19437)
+
+[10] Jordan, Keller, et al. *Muon: An Optimizer for Hidden Layers in Neural Networks.* 2024.
 [kellerjordan.github.io/posts/muon](https://kellerjordan.github.io/posts/muon/)
 
 <!-- MathJax for the equations of this post: the site theme (minima 2.5) does not load it -->
