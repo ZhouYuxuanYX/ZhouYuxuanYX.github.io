@@ -480,15 +480,18 @@ attributed to the clipping: from step 48k the runs see different data, and each 
 benchmark that enters the averages, grouped by task format; earlier versions averaged over slightly
 different sets of benchmarks. LiveCodeBench is left out because its prompt contains a
 `# YOUR CODE HERE` placeholder that base models tend to copy back instead of writing code, so both
-runs score below 3%.*
+runs score below 3%. IFEval is left out as well: it is designed for greedy decoding, and under
+sampling its format checks reward the random variety of a fat tail, which MultiMax suppresses by
+design, so MultiMax is at a built-in disadvantage there; sampling raises the baseline's score from
+28.1 to 30.4–31.2 and lowers MultiMax's from 29.9 to 24.2–25.0.*
 
-**On 27 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
+**On 26 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
 than the SoftMax baseline on average.** At step 78k, the average is 1.1 points higher with greedy
-decoding, 0.6 points with top-p sampling at 0.8 and 2.1 points with sampling at temperature 0.8,
-where the run is ahead on 19 of the 27. Table 2 lists every benchmark. The gap is largest when
+decoding, 0.9 points with top-p sampling at 0.8 and 2.4 points with sampling at temperature 0.8,
+where the run is ahead on 19 of the 26. Table 2 lists every benchmark. The gap is largest when
 sampling without top-p, likely because MultiMax already concentrates the probability mass on
 plausible tokens. With either kind of sampling, mathematics, reasoning, multiple choice and code
-improve, while open-ended QA, mostly short-answer factual recall, drops.
+improve, while short-answer factual QA drops.
 
 | benchmark | CoT | greedy | top-p 0.8 | temperature 0.8 |
 |---|---|---|---|---|
@@ -522,17 +525,16 @@ improve, while open-ended QA, mostly short-answer factual recall, drops.
 | HotPotQA |  | 22.3 / 22.0 | 17.8 / 16.4 | 18.0 / 16.7 |
 | WebQuestions |  | 43.2 / 44.7 | 35.8 / 30.8 | 35.3 / 33.6 |
 | MultiLoKo |  | 8.3 / 7.7 | 5.2 / 4.4 | 5.2 / 4.6 |
-| IFEval |  | 28.1 / 29.9 | 30.4 / 24.2 | 31.2 / 25.0 |
-| *open-ended (8)* | | *18.2 / 18.6 (+0.4)* | *15.1 / 12.5 (−2.6)* | *15.2 / 13.5 (−1.7)* |
-| **all (27)** | | **32.8 / 33.9 (+1.1)** | **29.7 / 30.3 (+0.6)** | **27.9 / 30.0 (+2.1)** |
+| *short-answer QA (7)* | | *16.8 / 17.0 (+0.3)* | *12.9 / 10.8 (−2.1)* | *13.0 / 11.9 (−1.1)* |
+| **all (26)** | | **32.9 / 34.0 (+1.1)** | **29.7 / 30.5 (+0.9)** | **27.8 / 30.2 (+2.4)** |
 
 *Table 2: Scores of the SoftMax baseline and of the run with separate clipping (SoftMax / MultiMax)
 at step 78k, in points; the group and overall rows give averages and, in brackets, the difference.
 CoT marks the prompts that elicit a chain of thought. Counting a difference of at most one point as
-level, the run is up on 10 benchmarks, level on 13 and down on 4 with greedy decoding, and up on 17,
-level on 4 and down on 6 at temperature 0.8. The six short-answer QA benchmarks are judged by
-gpt-oss-120b for greedy decoding and top-p sampling and by GPT-4.1 for temperature 0.8, so their
-scores are not comparable across columns.*
+level, the run is up on 9 benchmarks, level on 13 and down on 4 with greedy decoding, and up on 17,
+level on 4 and down on 5 at temperature 0.8. All short-answer QA benchmarks except MultiLoKo are
+judged by gpt-oss-120b for greedy decoding and top-p sampling and by GPT-4.1 for temperature 0.8, so
+their scores are not comparable across columns.*
 
 ## Beyond the vocabulary head: attention, MoE routing and RL
 
