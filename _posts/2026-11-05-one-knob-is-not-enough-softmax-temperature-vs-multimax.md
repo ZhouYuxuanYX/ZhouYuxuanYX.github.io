@@ -194,7 +194,8 @@ still leaves no temperature dominating the default, and raises the matched-spars
 This section shows that MultiMax escapes the frontier by applying different temperatures to
 different logit ranges, and that its two terms control the two metrics almost independently.
 
-MultiMax keeps SoftMax and inserts a learnable piece-wise linear modulator $\sigma$ before it:
+MultiMax keeps SoftMax and inserts a learnable modulator $\sigma$ before it; in its first-order form,
+$\sigma$ is piece-wise linear:
 
 $$
 \phi_{\text{MultiMax}}(x)_i = \frac{\exp(\sigma(x_i))}{\sum_k \exp(\sigma(x_k))}, \qquad
@@ -281,10 +282,11 @@ $$
 \tag{5}
 $$
 
-The series stops at the second order, which was sufficient in [1]. The cost is eight parameters per
-layer, 96 for a 12-layer transformer (about 0.0004% of the 22M of DeiT-small [3]), and about 15
-element-wise FLOPs per attention entry, about 0.04 GFLOPs against DeiT-small's 4.6 GFLOPs
-(**0.9%**).
+$\sigma$ is then quadratic below $b_2$ and above $d_2$, so the slope, and with it the temperature,
+changes gradually within those ranges instead of staying constant. The series stops at the second
+order, which was sufficient in [1]. The cost is eight parameters per layer, 96 for a 12-layer
+transformer (about 0.0004% of the 22M of DeiT-small [3]), and about 15 element-wise FLOPs per
+attention entry, about 0.04 GFLOPs against DeiT-small's 4.6 GFLOPs (**0.9%**).
 
 ## What the model learns
 
