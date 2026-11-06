@@ -318,9 +318,9 @@ signal is small: weight decay towards the identity could erase it.
 
 ## GPT-2 on OpenWebText: attention and the output layer each lower the loss
 
-This section tests the unchanged ICML 2024 formulation, in attention and in the output layer, in a
-full GPT-2 pretraining run with Karpathy's nanoGPT [5], using the reference implementation [2] as
-released, without the training rules introduced in the next section.
+This section tests the reference implementation [2] of MultiMax, in attention and in the output
+layer, in a full GPT-2 pretraining run with Karpathy's nanoGPT [5], without the training rules
+introduced in the next section.
 
 <figure style="display: flex; flex-direction: column; align-items: center; text-align: center;">
   <img src="{{ '/assets/images/mm_lm_valloss.png' | relative_url }}"
@@ -392,33 +392,23 @@ def SegLU(x, ranges, ts):
 In terms of Equation (5), `ts[0]` $= 1 - t_{b_1}$ and `ts[1]` $= t_{d_1} - 1$, likewise for the
 second order, and `ranges` holds $b_1, d_1, b_2, d_2$.
 
-**FLOPs understate the cost of a naive implementation.** In eager PyTorch, every element-wise
-operation of SegLU pays a kernel launch and a round trip through memory, which costs DeiT-small about
-40% in training time (Table 2); fusing the chain with `torch.jit.script` cuts this to about 10%, and
-the inference overhead stays below 2% even without fusion.
-
-| implementation (DeiT-small, ImageNet-1K) | s / iteration | training overhead |
-|---|---|---|
-| SoftMax baseline | 0.19 | — |
-| MultiMax, eager PyTorch | 0.26 | about +40% |
-| MultiMax, built-in ReLU and `torch.jit.script` | 0.21 | about +10% |
-
-*Table 2: Training time per iteration, from Section 4.4 of [1].*
-
-**SegLU runs inside the fused cross-entropy kernel, just before its SoftMax.** At vocabulary scale,
-the full logit tensor is never stored: the chunked fused linear cross-entropy (via
-[Liger Kernel](https://github.com/linkedin/Liger-Kernel)) receives
+**SegLU runs inside the fused cross-entropy kernel, just before its SoftMax.** Applied as separate
+element-wise operations, SegLU would pay a kernel launch and a round trip through memory for each
+of them. At vocabulary scale, the full logit tensor is never stored: the chunked fused linear
+cross-entropy (via [Liger Kernel](https://github.com/linkedin/Liger-Kernel)) receives
 `(hidden_states, weight, bias, multimax_ranges, multimax_ts)` instead of logits, and the Triton
 kernel applies SegLU to each block of logits in registers, with a closed-form backward (Figure 8).
-No tensor is added, so the round trips through memory behind Table 2 disappear. The kernel code is
-available in a [public fork of PaddleFleet](https://github.com/ZhouYuxuanYX/PaddleFleet/blob/7b4bc6de4e31f45d7976b9a31bc5f359151a3aae/src/paddlefleet/triton_ops/fused_linear_cross_entropy/cross_entropy.py#L118).
+No tensor is added, so these round trips disappear. The kernel code is available in a
+[public fork of PaddleFleet](https://github.com/ZhouYuxuanYX/PaddleFleet/blob/7b4bc6de4e31f45d7976b9a31bc5f359151a3aae/src/paddlefleet/triton_ops/fused_linear_cross_entropy/cross_entropy.py#L118).
 
-**Measured in 10B-A1B pretraining with the first implementation, the slowdown is about 3% and peak
-memory does not grow.** The run with joint clipping of the next section differs from the baseline
-only in the vocabulary head; both use the same dense MTP block. Over steps 2k to 34k, its median
-rate is $0.2093$ against $0.2160$ steps per second, around 3% lower, and peak memory is $36.2$ GB in
-both runs. The latest implementation, used in the run with separate clipping, has not been timed
-against a matched baseline.
+**The fused kernel keeps the slowdown small, and peak memory does not grow.** In 10B-A1B
+pretraining, the run with joint clipping of the next section, which differs from the baseline only
+in the vocabulary head and uses the same dense MTP block, trains at a median of $0.2093$ against
+$0.2160$ steps per second over steps 2k to 34k, around 3% slower, while lowering the loss by
+$0.011$; peak memory is $36.2$ GB in both runs. This is the first implementation; the latest one,
+used in the run with separate clipping, has not been timed against a matched baseline. The extra
+work per token is set by the vocabulary, while the rest of the compute grows with the model, so the
+relative cost falls with scale, to below 1% for the 280B-A14B model.
 
 **The eight scalars follow their own training rules.** They are initialised to zero, where SegLU is
 the identity; for lack of compute, the truncated normal initialisation (std 0.02) of the reference
@@ -487,7 +477,7 @@ attributed to the clipping: from step 48k the runs see different data, and each 
 **On 27 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
 than the SoftMax baseline on average.** At step 78k, the average is 0.6 points higher with greedy
 decoding, 0.7 points with top-p sampling at 0.8 and 1.9 points with sampling at temperature 0.8,
-where the run is ahead on 19 of the 27. Table 3 breaks the average down by task type. The gap is
+where the run is ahead on 19 of the 27. Table 2 breaks the average down by task type. The gap is
 largest when sampling without top-p, likely because MultiMax already concentrates the probability
 mass on plausible tokens. With either kind of sampling, multiple choice improves on every benchmark,
 while open-ended QA, mostly short-answer factual recall, drops.
@@ -501,7 +491,7 @@ while open-ended QA, mostly short-answer factual recall, drops.
 | open-ended QA | 8 | 18.2 | +0.4 | 15.1 | −2.6 | 15.2 | −1.7 |
 | all | 27 | 31.5 | +0.6 | 28.6 | +0.7 | 27.0 | +1.9 |
 
-*Table 3: Average scores of the SoftMax baseline at step 78k and the difference Δ of the run with
+*Table 2: Average scores of the SoftMax baseline at step 78k and the difference Δ of the run with
 separate clipping, by task type, in points. Counting a difference of at most one point as level, the
 run is up on 9 benchmarks, level on 14 and down on 4 with greedy decoding, and up on 16, level on 5
 and down on 6 at temperature 0.8. MMLU-Redux is left out because it has no greedy score, and BBH
