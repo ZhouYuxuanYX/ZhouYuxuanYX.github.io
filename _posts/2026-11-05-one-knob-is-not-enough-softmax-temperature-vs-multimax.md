@@ -544,11 +544,13 @@ relevant ones; the nanoGPT runs above and DeiT-small in [1] already gain there, 
 element-wise, it can sit in a fused attention kernel where logit soft-capping already does. In a
 mixture-of-experts layer with a SoftMax router, the gate should give no weight to unsuited experts
 while sharing it among the few that fit, which is what top-k routing asks for. In reinforcement
-learning, rollouts are usually sampled from the full distribution of the policy, the regime in which
-the benchmarks above gain most: suppressing implausible tokens while keeping several plausible ones
-is what exploration needs. So far, attention has been tested only at GPT-2 scale, and routing and
-reinforcement learning not at all. Both the reference implementation [4] and the fused kernel are
-public, and we welcome tests of MultiMax in other models and domains.
+learning, the exploration–exploitation trade-off is the same problem: with one temperature, a policy
+can explore only by also sampling implausible tokens, and exploit only by collapsing onto its top
+choice. MultiMax can keep exploring among the plausible tokens while suppressing the implausible
+ones, and rollouts are usually sampled from the full distribution of the policy, the regime in which
+the benchmarks above gain most. So far, attention has been tested only at GPT-2 scale, and routing
+and reinforcement learning not at all. Both the reference implementation [4] and the fused kernel
+are public, and we welcome tests of MultiMax in other models and domains.
 
 ## Reproducing the synthetic measurements
 
