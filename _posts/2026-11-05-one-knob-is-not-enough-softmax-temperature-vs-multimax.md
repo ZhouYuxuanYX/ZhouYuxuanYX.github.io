@@ -476,29 +476,54 @@ same order as the gain above 0.01 on the 280B-A14B model; its LM loss is $1.6730
 $1.9228$, while the baseline logs only the total. The $0.003$ between the two MultiMax runs is not
 attributed to the clipping: from step 48k the runs see different data, and each is a single run.
 
-**On 27 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
-than the SoftMax baseline on average.** At step 78k, the average is 0.6 points higher with greedy
-decoding, 0.7 points with top-p sampling at 0.8 and 1.9 points with sampling at temperature 0.8,
-where the run is ahead on 19 of the 27. Table 2 breaks the average down by task type. The gap is
-largest when sampling without top-p, likely because MultiMax already concentrates the probability
-mass on plausible tokens. With either kind of sampling, multiple choice improves on every benchmark,
-while open-ended QA, mostly short-answer factual recall, drops.
+**On 24 benchmarks of an internal evaluation platform, the run with separate clipping scores higher
+than the SoftMax baseline on average.** At step 78k, the average is 1.1 points higher with greedy
+decoding, 0.5 points with top-p sampling at 0.8 and 2.2 points with sampling at temperature 0.8,
+where the run is ahead on 17 of the 24. Table 2 lists every benchmark. The gap is largest when
+sampling without top-p, likely because MultiMax already concentrates the probability mass on
+plausible tokens. With either kind of sampling, mathematics, reasoning, multiple choice and code
+improve, while open-ended QA, mostly short-answer factual recall, drops.
 
-| task type | n | greedy | Δ | top-p 0.8 | Δ | temperature 0.8 | Δ |
-|---|---|---|---|---|---|---|---|
-| reasoning: mathematics | 4 | 32.3 | +1.8 | 28.5 | +2.6 | 25.1 | +5.8 |
-| reasoning: other | 6 | 26.7 | +0.3 | 25.1 | +0.3 | 24.3 | +1.5 |
-| code | 3 | 25.9 | −0.3 | 23.2 | +2.0 | 18.4 | +2.4 |
-| multiple choice | 6 | 56.3 | +0.7 | 52.9 | +3.7 | 50.9 | +4.0 |
-| open-ended QA | 8 | 18.2 | +0.4 | 15.1 | −2.6 | 15.2 | −1.7 |
-| all | 27 | 31.5 | +0.6 | 28.6 | +0.7 | 27.0 | +1.9 |
+| benchmark | CoT | greedy | top-p 0.8 | temperature 0.8 |
+|---|---|---|---|---|
+| MATH | ✓ | 34.3 / 34.8 | 31.0 / 31.5 | 23.7 / 30.7 |
+| MGSM | ✓ | 22.5 / 25.6 | 19.9 / 20.8 | 16.6 / 21.1 |
+| CMath | ✓ | 72.5 / 72.7 | 63.2 / 68.8 | 60.0 / 68.3 |
+| *mathematics (3)* | | *43.1 / 44.3 (+1.2)* | *38.0 / 40.4 (+2.4)* | *33.4 / 40.0 (+6.6)* |
+| BBH (CoT) | ✓ | 36.1 / 50.9 | 31.7 / 27.7 | 25.9 / 32.2 |
+| BBH (direct) |  | 36.5 / 37.3 | 33.3 / 35.6 | 31.2 / 35.2 |
+| BBEH |  | 7.8 / 7.5 | 7.0 / 6.4 | 5.9 / 6.6 |
+| PIQA |  | 64.9 / 69.9 | 65.0 / 69.7 | 61.6 / 67.6 |
+| *reasoning (4)* | | *36.3 / 41.4 (+5.1)* | *34.2 / 34.8 (+0.6)* | *31.2 / 35.4 (+4.2)* |
+| MMLU |  | 57.3 / 56.8 | 53.8 / 56.4 | 51.0 / 54.4 |
+| MMLU-Pro |  | 26.9 / 28.1 | 24.6 / 27.1 | 23.2 / 25.9 |
+| CMMLU |  | 54.1 / 53.3 | 50.4 / 52.2 | 47.6 / 50.7 |
+| C-Eval |  | 54.7 / 54.3 | 49.0 / 54.0 | 48.4 / 51.9 |
+| MMCU |  | 55.2 / 54.1 | 50.2 / 53.7 | 46.1 / 51.5 |
+| AGIEval |  | 39.1 / 36.7 | 34.9 / 35.2 | 31.8 / 34.1 |
+| GPQA (CoT) | ✓ | 19.8 / 23.4 | 23.3 / 17.5 | 25.4 / 23.1 |
+| GPQA (direct) |  | 30.3 / 29.0 | 27.4 / 30.7 | 28.5 / 30.3 |
+| *multiple choice (8)* | | *42.2 / 42.0 (−0.2)* | *39.2 / 40.8 (+1.6)* | *37.8 / 40.2 (+2.5)* |
+| HumanEval+ |  | 24.4 / 26.8 | 22.6 / 28.1 | 17.7 / 19.5 |
+| MBPP+ |  | 50.8 / 47.6 | 45.0 / 46.3 | 36.2 / 41.5 |
+| *code (2)* | | *37.6 / 37.2 (−0.4)* | *33.8 / 37.2 (+3.4)* | *27.0 / 30.5 (+3.6)* |
+| SimpleQA |  | 2.8 / 3.4 | 2.2 / 1.9 | 2.1 / 2.4 |
+| PreciseWikiQA |  | 7.7 / 8.4 | 5.1 / 4.2 | 5.5 / 4.9 |
+| PoPQA |  | 16.0 / 16.3 | 12.4 / 9.4 | 12.7 / 11.7 |
+| HotPotQA |  | 22.3 / 22.0 | 17.8 / 16.4 | 18.0 / 16.7 |
+| WebQuestions |  | 43.2 / 44.7 | 35.8 / 30.8 | 35.3 / 33.6 |
+| MultiLoKo |  | 8.3 / 7.7 | 5.2 / 4.4 | 5.2 / 4.6 |
+| IFEval |  | 28.1 / 29.9 | 30.4 / 24.2 | 31.2 / 25.0 |
+| *open-ended (7)* | | *18.3 / 18.9 (+0.6)* | *15.6 / 13.1 (−2.5)* | *15.7 / 14.1 (−1.6)* |
+| **all (24)** | | **34.0 / 35.0 (+1.1)** | **30.9 / 31.4 (+0.5)** | **28.8 / 31.0 (+2.2)** |
 
-*Table 2: Average scores of the SoftMax baseline at step 78k and the difference Δ of the run with
-separate clipping, by task type, in points. Counting a difference of at most one point as level, the
-run is up on 9 benchmarks, level on 14 and down on 4 with greedy decoding, and up on 16, level on 5
-and down on 6 at temperature 0.8. MMLU-Redux is left out because it has no greedy score, and BBH
-(CoT) and MathBench_cn because grading errors in these evaluations shifted their scores by about 15
-points.*
+*Table 2: Scores of the SoftMax baseline and of the run with separate clipping (SoftMax / MultiMax)
+at step 78k, in points; the group and overall rows give averages and, in brackets, the difference.
+CoT marks the prompts that elicit a chain of thought. Counting a difference of at most one point as
+level, the run is up on 8 benchmarks, level on 12 and down on 4 with greedy decoding, and up on 15,
+level on 4 and down on 5 at temperature 0.8. The five short-answer QA benchmarks are judged by
+gpt-oss-120b for greedy decoding and top-p sampling and by GPT-4.1 for temperature 0.8, so their
+scores are not comparable across columns.*
 
 ## Reproducing the synthetic measurements
 
