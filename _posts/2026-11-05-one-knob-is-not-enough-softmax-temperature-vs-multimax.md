@@ -323,8 +323,8 @@ signal is small: weight decay towards the identity could erase it.
 This section tests the reference implementation [4] of MultiMax, in attention and in the output
 layer, in a full GPT-2 pretraining run with Karpathy's nanoGPT [5], without the training rules
 introduced in the next section. Xudong Yan's [nanoGPT fork](https://github.com/demo4ai/nanoGPT)
-contains the training logs behind Figures 6 and 7 and a plain PyTorch implementation, without a
-fused kernel, for rerunning the three variants.
+contains the training logs behind Figures 6 and 7 and a plain PyTorch implementation without a fused
+kernel.
 
 <figure style="display: flex; flex-direction: column; align-items: center; text-align: center;">
   <img src="{{ '/assets/images/mm_lm_valloss.png' | relative_url }}"
