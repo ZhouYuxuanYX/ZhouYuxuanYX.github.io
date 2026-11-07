@@ -11,7 +11,7 @@ At ICML 2024 we proposed **MultiMax** [1], a family of piece-wise-temperature fu
 contains SoftMax and is designed to break its trade-off between sparsity and multi-modality in
 attention and output distributions. The paper makes this case mathematically, with formal
 definitions of sparsity and multi-modality and a proof that a temperature trades one against the
-other; the argument is rigorous but hard to follow, and I believe this is a main reason MultiMax has
+other; the argument is rigorous but hard to follow, and I believe this is a major reason MultiMax has
 been largely overlooked. This post explains it through figures and direct measurements instead of
 proofs, and adds what the paper had not tested: MultiMax at the scale of LLM pretraining.
 
