@@ -50,6 +50,14 @@ minima:
 
 google_scholar_url: "https://scholar.google.com/citations?user=ooVdh_kAAAAJ&hl=en"
 
+# Comments under each post (giscus, stored in this repo's GitHub Discussions);
+# nothing is shown until category_id is set
+giscus:
+  repo: ZhouYuxuanYX/ZhouYuxuanYX.github.io
+  repo_id: R_kgDOQQSilg
+  category: Announcements
+  category_id:
+
 # Keep the Search Console verification file out of the sitemap
 defaults:
   - scope:
