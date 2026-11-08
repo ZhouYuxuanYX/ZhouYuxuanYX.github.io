@@ -655,13 +655,27 @@ Thanks to [Xudong Yan](https://github.com/demo4ai) for running the nanoGPT exper
 
 ## Citation
 
-Cited as:
+To cite MultiMax, please cite the paper [1]:
 
-Zhou, Yuxuan. *One Knob Is Not Enough: How MultiMax Breaks the SoftMax Temperature Trade-off.*
-Blog post, November 2026.
-[zhouyuxuanyx.github.io/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html](https://zhouyuxuanyx.github.io/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html)
+{% raw %}
+```bibtex
+@InProceedings{pmlr-v235-zhou24g,
+  title     = {{M}ulti{M}ax: Sparse and Multi-Modal Attention Learning},
+  author    = {Zhou, Yuxuan and Fritz, Mario and Keuper, Margret},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  pages     = {61897--61912},
+  year      = {2024},
+  editor    = {Salakhutdinov, Ruslan and Kolter, Zico and Heller, Katherine and Weller, Adrian and Oliver, Nuria and Scarlett, Jonathan and Berkenkamp, Felix},
+  volume    = {235},
+  series    = {Proceedings of Machine Learning Research},
+  month     = {21--27 Jul},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v235/zhou24g.html}
+}
+```
+{% endraw %}
 
-Or in BibTeX:
+The GPT-2 and LLM pretraining results appear only in this post; to cite them, cite the post as well:
 
 ```bibtex
 @misc{zhou2026oneknob,
