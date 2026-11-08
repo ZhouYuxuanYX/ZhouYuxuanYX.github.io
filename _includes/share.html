@@ -1,0 +1,17 @@
+{%- unless page.share == false -%}
+{%- assign share_url = page.url | absolute_url | url_encode | replace: "+", "%20" -%}
+{%- assign share_title = page.title | url_encode | replace: "+", "%20" -%}
+<!-- Share links: plain share URLs of each site, no third-party scripts -->
+<p class="post-share" style="margin-top: 2.5em; color: #999; font-size: 0.9em;">
+  Share:&nbsp;
+  <a href="https://x.com/intent/tweet?text={{ share_title }}&amp;url={{ share_url }}" target="_blank" rel="noopener" style="color:#999;">X</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener" style="color:#999;">LinkedIn</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://news.ycombinator.com/submitlink?u={{ share_url }}&amp;t={{ share_title }}" target="_blank" rel="noopener" style="color:#999;">Hacker&nbsp;News</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://www.reddit.com/submit?url={{ share_url }}&amp;title={{ share_title }}" target="_blank" rel="noopener" style="color:#999;">Reddit</a>
+  &nbsp;&middot;&nbsp;
+  <a href="{{ page.url | absolute_url }}" onclick="if (!navigator.clipboard) return true; navigator.clipboard.writeText(this.href).then(() => { this.textContent = 'Link copied'; }); return false;" style="color:#999;">Copy&nbsp;link</a>
+</p>
+{%- endunless -%}
