@@ -5,6 +5,11 @@ date: 2026-11-05 00:00:00 +0000
 categories: [LLM, Attention Mechanism, Machine Learning]
 redirect_from:
   - "/llm/attention mechanism/machine learning/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html"
+image:
+  path: /assets/images/mm_share_card.png
+  width: 1200
+  height: 630
+  alt: "Two logits: a temperature steepens or flattens the whole curve; MultiMax bends it. One row of 2,048 logits: the temperature only slides along the frontier; MultiMax steps off it."
 ---
 
 At ICML 2024 we proposed **MultiMax** [1], a family of piece-wise-temperature functions that
@@ -647,6 +652,27 @@ version.
 ## Acknowledgements
 
 Thanks to [Xudong Yan](https://github.com/demo4ai) for running the nanoGPT experiments.
+
+## Citation
+
+Cited as:
+
+Zhou, Yuxuan. *One Knob Is Not Enough: How MultiMax Breaks the SoftMax Temperature Trade-off.*
+Blog post, November 2026.
+[zhouyuxuanyx.github.io/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html](https://zhouyuxuanyx.github.io/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html)
+
+Or in BibTeX:
+
+```bibtex
+@misc{zhou2026oneknob,
+  author       = {Zhou, Yuxuan},
+  title        = {One Knob Is Not Enough: How {MultiMax} Breaks the {SoftMax} Temperature Trade-off},
+  howpublished = {Blog post},
+  year         = {2026},
+  month        = nov,
+  url          = {https://zhouyuxuanyx.github.io/2026/11/05/one-knob-is-not-enough-softmax-temperature-vs-multimax.html}
+}
+```
 
 ## References
 
