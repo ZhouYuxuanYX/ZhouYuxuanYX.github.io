@@ -58,6 +58,11 @@ giscus:
   category: Announcements
   category_id: DIC_kwDOQQSils4DKqbW
 
+# Jekyll skips dot directories by default; the vercount domain-verification
+# file has to be published
+include:
+  - .well-known
+
 # Keep the Search Console verification file out of the sitemap
 defaults:
   - scope:
